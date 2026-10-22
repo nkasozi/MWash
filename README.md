@@ -36,4 +36,6 @@ Open the `application/config/database.php` file with a text editor and set your 
 
 **!IMPORTANT**: Incase your running the application on your local server or unsecure http:// please visit this [issue](https://github.com/Code4SierraLeone/MWash/issues/1)
 
+## Runtime
 
+Use PHP 8.3.36 or a newer 8.3 security release. Install the locked dependencies with `composer install`. The bundled CI3-compatible framework is pocketarc/codeigniter 3.4.5 (commit 795dc3f0411f2101f3b624f71cb19937efd90f37). Google FusionTables is retired; the historical generated service classes are retained only for existing source compatibility. Those classes originate from google/apiclient-services 0.11, commit 48c554aee06f2fd5700d7bdfa4fa6b82d184eb52.
