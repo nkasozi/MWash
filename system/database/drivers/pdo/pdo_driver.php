@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2019 - 2022, CodeIgniter Foundation
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,8 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
- * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
- * @license	https://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 2.1.0
  * @filesource
@@ -52,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Drivers
  * @category	Database
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/userguide3/database/
+ * @link		https://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_driver extends CI_DB {
 
@@ -154,7 +153,7 @@ class CI_DB_pdo_driver extends CI_DB {
 				$debugbar->addCollector(new DebugBar\DataCollector\PDO\PDOCollector($pdo));
 				return $pdo;
 			} else {
-				return new PDO($this->dsn, $this->username, $this->password, $this->options);
+			return new PDO($this->dsn, $this->username, $this->password, $this->options);
 			}
 		}
 		catch (PDOException $e)
@@ -324,7 +323,7 @@ class CI_DB_pdo_driver extends CI_DB {
 		$error['code'] = isset($pdo_error[1]) ? $pdo_error[0].'/'.$pdo_error[1] : $pdo_error[0];
 		if (isset($pdo_error[2]))
 		{
-			$error['message'] = $pdo_error[2];
+			 $error['message'] = $pdo_error[2];
 		}
 
 		return $error;

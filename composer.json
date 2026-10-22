@@ -1,29 +1,29 @@
 {
-    "description": "The CodeIgniter framework",
-    "name": "code4sierraleone/mwash",
-    "type": "project",
-    "homepage": "https://codeigniter.com",
-    "license": "MIT",
-    "support": {
-        "forum": "http://forum.codeigniter.com/",
-        "wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
-        "irc": "irc://irc.freenode.net/codeigniter",
-        "source": "https://github.com/bcit-ci/CodeIgniter"
-    },
-    "require": {
-        "php": "~8.3.36",
-        "google/apiclient": "^2.20",
-        "google/apiclient-services": "0.464.0"
-    },
-    "config": {
-        "platform": {
-            "php": "8.3.36"
-        },
-        "allow-plugins": false
-    },
-    "autoload": {
-        "classmap": [
-            "legacy-google/"
-        ]
-    }
+	"description": "The CodeIgniter framework",
+	"name": "codeigniter/framework",
+	"type": "project",
+	"homepage": "https://codeigniter.com",
+	"license": "MIT",
+	"support": {
+		"forum": "http://forum.codeigniter.com/",
+		"wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
+		"irc": "irc://irc.freenode.net/codeigniter",
+		"source": "https://github.com/bcit-ci/CodeIgniter"
+	},
+	"require": {
+		"php": "~8.3.36",
+		"google/apiclient": "^2.20",
+		"google/apiclient-services": "0.464.0"
+	},
+	"config": {
+		"platform": {
+			"php": "8.3.36"
+		},
+		"allow-plugins": false
+	},
+	"autoload": {
+		"classmap": [
+			"legacy-google/"
+		]
+	}
 }

@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2019 - 2022, CodeIgniter Foundation
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,8 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
- * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
- * @license	https://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
@@ -47,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	CodeIgniter
  * @category	Common Functions
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/userguide3/
+ * @link		https://codeigniter.com/user_guide/
  */
 
 // ------------------------------------------------------------------------
@@ -82,7 +81,8 @@ if ( ! function_exists('is_really_writable'))
 	 * Tests for file writability
 	 *
 	 * is_writable() returns TRUE on Windows servers when you really can't write to
-	 * the file, based on the read-only attribute.
+	 * the file, based on the read-only attribute. is_writable() is also unreliable
+	 * on Unix servers if safe_mode is on.
 	 *
 	 * @link	https://bugs.php.net/bug.php?id=54709
 	 * @param	string
@@ -90,7 +90,7 @@ if ( ! function_exists('is_really_writable'))
 	 */
 	function is_really_writable($file)
 	{
-		// If we're on a UNIX-like server, just is_writable()
+		// If we're on a Unix server with safe_mode off we call is_writable
 		if (DIRECTORY_SEPARATOR === '/')
 		{
 			return is_writable($file);
@@ -135,7 +135,7 @@ if ( ! function_exists('load_class'))
 	 *
 	 * @param	string	the class name being requested
 	 * @param	string	the directory where the class should be found
-	 * @param	mixed	an optional argument to pass to the class constructor
+	 * @param	string	an optional argument to pass to the class constructor
 	 * @return	object
 	 */
 	function &load_class($class, $directory = 'libraries', $param = NULL)
@@ -630,7 +630,7 @@ if ( ! function_exists('_error_handler'))
 
 		// If the error is fatal, the execution of the script should be stopped because
 		// errors can't be recovered from. Halting the script conforms with PHP's
-		// default error handling. See https://secure.php.net/manual/en/errorfunc.constants.php
+		// default error handling. See http://www.php.net/manual/en/errorfunc.constants.php
 		if ($is_error)
 		{
 			exit(1); // EXIT_ERROR
@@ -796,6 +796,7 @@ if ( ! function_exists('_stringify_attributes'))
 		$attributes = (array) $attributes;
 
 		$atts = '';
+
 		foreach ($attributes as $key => $val)
 		{
 			$atts .= ($js) ? $key.'='.$val.',' : ' '.$key.'="'.$val.'"';

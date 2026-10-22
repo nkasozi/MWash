@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2019 - 2022, CodeIgniter Foundation
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,8 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
- * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
- * @license	https://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
@@ -45,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Security
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/userguide3/libraries/security.html
+ * @link		https://codeigniter.com/user_guide/libraries/security.html
  */
 class CI_Security {
 
@@ -277,8 +276,8 @@ class CI_Security {
 		if (is_php('7.3'))
 		{
 			setcookie(
-				$this->_csrf_cookie_name,
-				$this->_csrf_hash,
+			$this->_csrf_cookie_name,
+			$this->_csrf_hash,
 				array(
 					'expires'  => $expire,
 					'path'     => config_item('cookie_path'),
@@ -295,7 +294,8 @@ class CI_Security {
 			header('Set-Cookie: '.$this->_csrf_cookie_name.'='.$this->_csrf_hash
 					.'; Expires='.gmdate('D, d-M-Y H:i:s T', $expire)
 					.'; Max-Age='.$this->_csrf_expire
-					.'; Path='.implode('/', array_map('rawurlencode', explode('/', config_item('cookie_path'))))
+					.'; Path='.implode('/', array_map('rawurlencode', explode('/',
+			config_item('cookie_path'))))
 					.($domain === '' ? '' : '; Domain='.$domain)
 					.($secure_cookie ? '; Secure' : '')
 					.(config_item('cookie_httponly') ? '; HttpOnly' : '')
@@ -567,8 +567,9 @@ class CI_Security {
 			$str
 		);
 
-		// Same thing, but for "tag functions" (e.g. eval`some code`)
-		// See https://github.com/bcit-ci/CodeIgniter/issues/5420
+		// Final clean up
+		// This adds a bit of extra precaution in case
+		// something got through the above filters
 		$str = preg_replace(
 			'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)`(.*?)`#si',
 			'\\1\\2&#96;\\3&#96;',
@@ -657,6 +658,7 @@ class CI_Security {
 			return $output;
 		}
 
+
 		if (is_readable('/dev/urandom') && ($fp = fopen('/dev/urandom', 'rb')) !== FALSE)
 		{
 			// Try not to waste entropy ...
@@ -690,7 +692,7 @@ class CI_Security {
 	 * correctly. html_entity_decode() does not convert entities without
 	 * semicolons, so we are left with our own little solution here. Bummer.
 	 *
-	 * @link	https://secure.php.net/html-entity-decode
+	 * @link	http://php.net/html-entity-decode
 	 *
 	 * @param	string	$str		Input
 	 * @param	string	$charset	Character set
@@ -705,7 +707,7 @@ class CI_Security {
 
 		static $_entities;
 
-		isset($charset)   OR $charset = $this->charset;
+		isset($charset) OR $charset = $this->charset;
 		isset($_entities) OR $_entities = array_map('strtolower', get_html_translation_table(HTML_ENTITIES, ENT_COMPAT | ENT_HTML5, $charset));
 
 		do
@@ -862,7 +864,7 @@ class CI_Security {
 		// For other tags, see if their attributes are "evil" and strip those
 		elseif (isset($matches['attributes']))
 		{
-			// We'll store the already filtered attributes here
+			// We'll store the already fitlered attributes here
 			$attributes = array();
 
 			// Attribute-catching pattern
@@ -1085,4 +1087,5 @@ class CI_Security {
 
 		return $this->_csrf_hash;
 	}
+
 }
