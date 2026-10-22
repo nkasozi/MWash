@@ -277,7 +277,7 @@ if ( ! function_exists('form_upload'))
 	 * @param	mixed
 	 * @return	string
 	 */
-	function form_upload($data = '', $extra = '')
+	function form_upload($data = '', $value = '', $extra = '')
 	{
 		$defaults = array('type' => 'file', 'name' => '');
 		is_array($data) OR $data = array('name' => $data);
@@ -610,7 +610,13 @@ if ( ! function_exists('form_label'))
 			$label .= ' for="'.$id.'"';
 		}
 
-		$label .= _attributes_to_string($attributes);
+		if (is_array($attributes) && count($attributes) > 0)
+		{
+			foreach ($attributes as $key => $val)
+			{
+				$label .= ' '.$key.'="'.$val.'"';
+			}
+		}
 
 		return $label.'>'.$label_text.'</label>';
 	}

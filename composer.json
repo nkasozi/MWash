@@ -15,11 +15,17 @@
 		"google/apiclient": "^2.20",
 		"google/apiclient-services": "0.464.0"
 	},
+	"suggest": {
+		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
+	},
+	"require-dev": {
+		"mikey179/vfsstream": "1.1.*",
+		"kenjis/ci-phpunit-test": "^0.15.0"
+	},
 	"config": {
 		"platform": {
 			"php": "8.3.36"
-		},
-		"allow-plugins": false
+		}
 	},
 	"autoload": {
 		"classmap": [

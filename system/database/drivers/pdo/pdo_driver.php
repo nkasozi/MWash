@@ -35,9 +35,6 @@
  * @since	Version 2.1.0
  * @filesource
  */
-
-use DebugBar\DataCollector\PDO\TraceablePDO;
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -67,9 +64,7 @@ class CI_DB_pdo_driver extends CI_DB {
 	 *
 	 * @var	array
 	 */
-	public $options = array(
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-	);
+	public $options = array();
 
 	// --------------------------------------------------------------------
 
@@ -131,30 +126,14 @@ class CI_DB_pdo_driver extends CI_DB {
 	 */
 	public function db_connect($persistent = FALSE)
 	{
-		global $debugbar;
-
 		if ($persistent === TRUE)
 		{
 			$this->options[PDO::ATTR_PERSISTENT] = TRUE;
 		}
 
-		// From PHP8.0, default PDO::ATTR_ERRMODE is changed
-		// from PDO::ERRMODE_SILENT to PDO::ERRMODE_EXCEPTION
-		// as https://wiki.php.net/rfc/pdo_default_errmode
-		if ( ! isset($this->options[PDO::ATTR_ERRMODE]))
-		{
-			$this->options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_SILENT;
-		}
-
 		try
 		{
-			if ($debugbar) {
-				$pdo = new TraceablePDO(new PDO($this->dsn, $this->username, $this->password, $this->options));
-				$debugbar->addCollector(new DebugBar\DataCollector\PDO\PDOCollector($pdo));
-				return $pdo;
-			} else {
 			return new PDO($this->dsn, $this->username, $this->password, $this->options);
-			}
 		}
 		catch (PDOException $e)
 		{
@@ -345,19 +324,6 @@ class CI_DB_pdo_driver extends CI_DB {
 	protected function _truncate($table)
 	{
 		return 'TRUNCATE TABLE '.$table;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Close DB Connection
-	 *
-	 * @return	void
-	 */
-	protected function _close()
-	{
-		$this->result_id = FALSE;
-		$this->conn_id = FALSE;
 	}
 
 }

@@ -91,7 +91,7 @@ if ( ! function_exists('is_really_writable'))
 	function is_really_writable($file)
 	{
 		// If we're on a Unix server with safe_mode off we call is_writable
-		if (DIRECTORY_SEPARATOR === '/')
+		if (DIRECTORY_SEPARATOR === '/' && (is_php('5.4') OR ! ini_get('safe_mode')))
 		{
 			return is_writable($file);
 		}
@@ -499,7 +499,6 @@ if ( ! function_exists('set_status_header'))
 			$stati = array(
 				100	=> 'Continue',
 				101	=> 'Switching Protocols',
-				103	=> 'Early Hints',
 
 				200	=> 'OK',
 				201	=> 'Created',
@@ -508,7 +507,6 @@ if ( ! function_exists('set_status_header'))
 				204	=> 'No Content',
 				205	=> 'Reset Content',
 				206	=> 'Partial Content',
-				207	=> 'Multi-Status',
 
 				300	=> 'Multiple Choices',
 				301	=> 'Moved Permanently',
@@ -517,7 +515,6 @@ if ( ! function_exists('set_status_header'))
 				304	=> 'Not Modified',
 				305	=> 'Use Proxy',
 				307	=> 'Temporary Redirect',
-				308	=> 'Permanent Redirect',
 
 				400	=> 'Bad Request',
 				401	=> 'Unauthorized',
@@ -537,13 +534,11 @@ if ( ! function_exists('set_status_header'))
 				415	=> 'Unsupported Media Type',
 				416	=> 'Requested Range Not Satisfiable',
 				417	=> 'Expectation Failed',
-				421	=> 'Misdirected Request',
 				422	=> 'Unprocessable Entity',
 				426	=> 'Upgrade Required',
 				428	=> 'Precondition Required',
 				429	=> 'Too Many Requests',
 				431	=> 'Request Header Fields Too Large',
-				451	=> 'Unavailable For Legal Reasons',
 
 				500	=> 'Internal Server Error',
 				501	=> 'Not Implemented',
@@ -570,7 +565,7 @@ if ( ! function_exists('set_status_header'))
 			return;
 		}
 
-		$server_protocol = (isset($_SERVER['SERVER_PROTOCOL']) && in_array($_SERVER['SERVER_PROTOCOL'], array('HTTP/1.0', 'HTTP/1.1', 'HTTP/2', 'HTTP/2.0'), TRUE))
+		$server_protocol = (isset($_SERVER['SERVER_PROTOCOL']) && in_array($_SERVER['SERVER_PROTOCOL'], array('HTTP/1.0', 'HTTP/1.1', 'HTTP/2'), TRUE))
 			? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header($server_protocol.' '.$code.' '.$text, TRUE, $code);
 	}
@@ -727,7 +722,7 @@ if ( ! function_exists('remove_invisible_characters'))
 
 		do
 		{
-			$str = preg_replace($non_displayables, '', (string)$str, -1, $count);
+			$str = preg_replace($non_displayables, '', $str, -1, $count);
 		}
 		while ($count);
 
@@ -783,9 +778,11 @@ if ( ! function_exists('_stringify_attributes'))
 	 */
 	function _stringify_attributes($attributes, $js = FALSE)
 	{
+		$atts = NULL;
+
 		if (empty($attributes))
 		{
-			return NULL;
+			return $atts;
 		}
 
 		if (is_string($attributes))
@@ -794,8 +791,6 @@ if ( ! function_exists('_stringify_attributes'))
 		}
 
 		$attributes = (array) $attributes;
-
-		$atts = '';
 
 		foreach ($attributes as $key => $val)
 		{
